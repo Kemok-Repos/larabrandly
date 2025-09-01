@@ -53,7 +53,7 @@ class RebrandlyService
     public function updateLink(string $linkId, UpdateLinkData $data): LinkData
     {
         try {
-            $response = $this->client->put("links/{$linkId}", $data->toArray());
+            $response = $this->client->post("links/{$linkId}", $data->toArray());
 
             return LinkData::fromArray($response);
         } catch (RebrandlyException $e) {
