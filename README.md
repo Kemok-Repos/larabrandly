@@ -418,15 +418,42 @@ try {
 # Ejecutar todas las pruebas
 composer test
 
-# Generar reporte de cobertura en HTML (se guarda en /coverage)
+# Generar reporte de cobertura en HTML (requiere Xdebug o PCOV)
 composer test-coverage
 
-# Ver cobertura en la terminal
+# Ver cobertura en la terminal (requiere Xdebug o PCOV)
 composer test-coverage-text
 
-# Generar archivo XML de cobertura para CI/CD
+# Generar archivo XML de cobertura para CI/CD (requiere Xdebug o PCOV)
 composer test-coverage-clover
 ```
+
+### Configurar Cobertura de Código
+
+Para generar reportes de cobertura, necesitas instalar **Xdebug** o **PCOV**:
+
+#### Opción 1: Instalar Xdebug
+```bash
+# macOS (con Homebrew)
+brew install php@8.1-xdebug  # o tu versión de PHP
+
+# Ubuntu/Debian
+sudo apt-get install php-xdebug
+
+# CentOS/RHEL
+sudo yum install php-xdebug
+```
+
+#### Opción 2: Instalar PCOV (más rápido para cobertura)
+```bash
+# Con PECL
+pecl install pcov
+
+# Agregar a php.ini
+echo "extension=pcov.so" >> php.ini
+```
+
+Una vez instalado cualquiera de los dos, los comandos de cobertura funcionarán correctamente.
 
 ## Análisis de Código
 
@@ -441,9 +468,6 @@ composer check-format
 
 # Aplicar formato automáticamente
 composer format
-
-# Análisis con Psalm
-composer psalm
 
 # Ejecutar todas las verificaciones de calidad
 composer quality

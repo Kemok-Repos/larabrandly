@@ -4,16 +4,10 @@ parameters:
         - tests
     level: 8
     ignoreErrors:
+        # Ignore PHPUnit mock methods - only the ones that are actually used
         - '#Call to an undefined method [a-zA-Z0-9\\_]+::expects\(\)#'
-        - '#Call to an undefined method [a-zA-Z0-9\\_]+::willReturn\(\)#'
-        - '#Call to an undefined method [a-zA-Z0-9\\_]+::method\(\)#'
-        - '#Call to an undefined method [a-zA-Z0-9\\_]+::with\(\)#'
-        - '#Call to an undefined method [a-zA-Z0-9\\_]+::once\(\)#'
-        - '#Call to an undefined method [a-zA-Z0-9\\_]+::never\(\)#'
-        - '#Call to an undefined method [a-zA-Z0-9\\_]+::willThrowException\(\)#'
-        # Ignore PHPUnit mock methods
-        - '#Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject::#'
+        # Ignore array type specifications for data objects (they contain mixed API data)
+        - '#has parameter \$[a-zA-Z]+ with no value type specified in iterable type array#'
+        - '#return type has no value type specified in iterable type array#'
     excludePaths:
         - vendor/*
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false

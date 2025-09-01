@@ -12,7 +12,8 @@ class UpdateLinkData
         public readonly ?string $domain = null,
         public readonly ?array $tags = null,
         public readonly ?bool $favourite = null,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

@@ -3,6 +3,7 @@
 namespace KemokRepos\Larabrandly\Tests\Unit\Services;
 
 use KemokRepos\Larabrandly\Data\CreateTagData;
+use KemokRepos\Larabrandly\Data\LinkData;
 use KemokRepos\Larabrandly\Data\TagData;
 use KemokRepos\Larabrandly\Data\UpdateTagData;
 use KemokRepos\Larabrandly\Exceptions\RebrandlyException;
@@ -127,6 +128,22 @@ class TagServiceTest extends TestCase
         $this->assertEquals('Updated Marketing', $result->name);
     }
 
+    public function test_update_tag_throws_not_found_exception(): void
+    {
+        $tagId = 'nonexistent';
+        $updateData = new UpdateTagData(name: 'Updated Name');
+
+        $this->client
+            ->expects($this->once())
+            ->method('put')
+            ->willThrowException(RebrandlyException::apiError('Tag not found', 404));
+
+        $this->expectException(RebrandlyException::class);
+        $this->expectExceptionMessage("Tag with ID 'nonexistent' not found");
+
+        $this->service->updateTag($tagId, $updateData);
+    }
+
     public function test_delete_tag_success(): void
     {
         $tagId = 'tag123';
@@ -140,6 +157,21 @@ class TagServiceTest extends TestCase
         $result = $this->service->deleteTag($tagId);
 
         $this->assertTrue($result);
+    }
+
+    public function test_delete_tag_throws_not_found_exception(): void
+    {
+        $tagId = 'nonexistent';
+
+        $this->client
+            ->expects($this->once())
+            ->method('delete')
+            ->willThrowException(RebrandlyException::apiError('Tag not found', 404));
+
+        $this->expectException(RebrandlyException::class);
+        $this->expectExceptionMessage("Tag with ID 'nonexistent' not found");
+
+        $this->service->deleteTag($tagId);
     }
 
     public function test_list_tags_success(): void
@@ -173,6 +205,22 @@ class TagServiceTest extends TestCase
         $this->assertEquals('tag456', $result[1]->id);
     }
 
+    public function test_list_tags_with_filters(): void
+    {
+        $filters = ['limit' => 10];
+
+        $this->client
+            ->expects($this->once())
+            ->method('get')
+            ->with('tags', $filters)
+            ->willReturn([]);
+
+        $result = $this->service->listTags($filters);
+
+        $this->assertIsArray($result);
+        $this->assertEmpty($result);
+    }
+
     public function test_attach_tag_to_link_success(): void
     {
         $linkId = 'link123';
@@ -189,6 +237,22 @@ class TagServiceTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function test_attach_tag_to_link_throws_not_found_exception(): void
+    {
+        $linkId = 'nonexistent';
+        $tagId = 'tag456';
+
+        $this->client
+            ->expects($this->once())
+            ->method('post')
+            ->willThrowException(RebrandlyException::apiError('Link not found', 404));
+
+        $this->expectException(RebrandlyException::class);
+        $this->expectExceptionMessage('Link or Tag not found');
+
+        $this->service->attachTagToLink($linkId, $tagId);
+    }
+
     public function test_detach_tag_from_link_success(): void
     {
         $linkId = 'link123';
@@ -203,6 +267,22 @@ class TagServiceTest extends TestCase
         $result = $this->service->detachTagFromLink($linkId, $tagId);
 
         $this->assertTrue($result);
+    }
+
+    public function test_detach_tag_from_link_throws_not_found_exception(): void
+    {
+        $linkId = 'nonexistent';
+        $tagId = 'tag456';
+
+        $this->client
+            ->expects($this->once())
+            ->method('delete')
+            ->willThrowException(RebrandlyException::apiError('Tag not found', 404));
+
+        $this->expectException(RebrandlyException::class);
+        $this->expectExceptionMessage('Link or Tag not found');
+
+        $this->service->detachTagFromLink($linkId, $tagId);
     }
 
     public function test_get_link_tags_success(): void
@@ -231,6 +311,21 @@ class TagServiceTest extends TestCase
         $this->assertCount(2, $result);
         $this->assertInstanceOf(TagData::class, $result[0]);
         $this->assertInstanceOf(TagData::class, $result[1]);
+    }
+
+    public function test_get_link_tags_throws_not_found_exception(): void
+    {
+        $linkId = 'nonexistent';
+
+        $this->client
+            ->expects($this->once())
+            ->method('get')
+            ->willThrowException(RebrandlyException::apiError('Link not found', 404));
+
+        $this->expectException(RebrandlyException::class);
+        $this->expectExceptionMessage("Link with ID 'nonexistent' not found");
+
+        $this->service->getLinkTags($linkId);
     }
 
     public function test_get_tag_links_success(): void

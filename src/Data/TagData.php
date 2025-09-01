@@ -11,7 +11,8 @@ class TagData
         public readonly ?\DateTimeImmutable $createdAt = null,
         public readonly ?\DateTimeImmutable $updatedAt = null,
         public readonly ?int $linksCount = null,
-    ) {}
+    ) {
+    }
 
     public static function fromArray(array $data): self
     {

@@ -17,7 +17,8 @@ class LinkData
         public readonly ?int $clicks = null,
         public readonly ?bool $favourite = null,
         public readonly ?string $description = null,
-    ) {}
+    ) {
+    }
 
     public static function fromArray(array $data): self
     {
@@ -26,7 +27,7 @@ class LinkData
             title: $data['title'] ?? null,
             slashtag: $data['slashtag'] ?? null,
             destination: $data['destination'] ?? null,
-            domain: isset($data['domain']['fullName']) ? $data['domain']['fullName'] : ($data['domain'] ?? null),
+            domain: $data['domain']['fullName'] ?? ($data['domain'] ?? null),
             shortUrl: $data['shortUrl'] ?? null,
             tags: $data['tags'] ?? null,
             createdAt: isset($data['createdAt']) ? new \DateTimeImmutable($data['createdAt']) : null,

@@ -16,6 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 class TagIntegrationTest extends TestCase
 {
+    /** @var array<string, mixed> */
     private array $fixtures;
 
     protected function setUp(): void
@@ -27,9 +28,9 @@ class TagIntegrationTest extends TestCase
     public function test_complete_tag_lifecycle(): void
     {
         $mockHandler = new MockHandler([
-            new Response(200, [], json_encode($this->fixtures['create_tag_success'])),
-            new Response(200, [], json_encode($this->fixtures['get_tag_success'])),
-            new Response(200, [], json_encode($this->fixtures['update_tag_success'])),
+            new Response(200, [], json_encode($this->fixtures['create_tag_success']) ?: '{}'),
+            new Response(200, [], json_encode($this->fixtures['get_tag_success']) ?: '{}'),
+            new Response(200, [], json_encode($this->fixtures['update_tag_success']) ?: '{}'),
             new Response(204, [], ''),
         ]);
 
@@ -51,6 +52,7 @@ class TagIntegrationTest extends TestCase
         $this->assertEquals('#ff6b35', $createdTag->color);
         $this->assertEquals(0, $createdTag->linksCount);
 
+        $this->assertNotNull($createdTag->id);
         $fetchedTag = $service->getTag($createdTag->id);
 
         $this->assertEquals('Marketing', $fetchedTag->name);
@@ -78,7 +80,7 @@ class TagIntegrationTest extends TestCase
         unset($responseData['color']);
 
         $mockHandler = new MockHandler([
-            new Response(200, [], json_encode($responseData)),
+            new Response(200, [], json_encode($responseData) ?: '{}'),
         ]);
 
         $handlerStack = HandlerStack::create($mockHandler);
@@ -98,7 +100,7 @@ class TagIntegrationTest extends TestCase
     public function test_list_tags_integration(): void
     {
         $mockHandler = new MockHandler([
-            new Response(200, [], json_encode($this->fixtures['list_tags_success'])),
+            new Response(200, [], json_encode($this->fixtures['list_tags_success']) ?: '{}'),
         ]);
 
         $handlerStack = HandlerStack::create($mockHandler);
@@ -126,7 +128,7 @@ class TagIntegrationTest extends TestCase
     {
         $mockHandler = new MockHandler([
             new Response(204, [], ''),
-            new Response(200, [], json_encode($this->fixtures['link_tags_success'])),
+            new Response(200, [], json_encode($this->fixtures['link_tags_success']) ?: '{}'),
             new Response(204, [], ''),
         ]);
 
@@ -155,7 +157,7 @@ class TagIntegrationTest extends TestCase
     public function test_handles_tag_not_found_errors(): void
     {
         $mockHandler = new MockHandler([
-            new Response(404, [], json_encode($this->fixtures['error_not_found'])),
+            new Response(404, [], json_encode($this->fixtures['error_not_found']) ?: '{}'),
         ]);
 
         $handlerStack = HandlerStack::create($mockHandler);
@@ -176,7 +178,7 @@ class TagIntegrationTest extends TestCase
         unset($responseData['color']);
 
         $mockHandler = new MockHandler([
-            new Response(200, [], json_encode($responseData)),
+            new Response(200, [], json_encode($responseData) ?: '{}'),
         ]);
 
         $handlerStack = HandlerStack::create($mockHandler);
@@ -195,7 +197,7 @@ class TagIntegrationTest extends TestCase
     public function test_get_tag_links_integration(): void
     {
         $mockHandler = new MockHandler([
-            new Response(200, [], json_encode($this->fixtures['tag_links_success'])),
+            new Response(200, [], json_encode($this->fixtures['tag_links_success']) ?: '{}'),
         ]);
 
         $handlerStack = HandlerStack::create($mockHandler);
@@ -238,7 +240,7 @@ class TagIntegrationTest extends TestCase
         $filteredData = array_slice($this->fixtures['tag_links_success'], 0, 2);
         
         $mockHandler = new MockHandler([
-            new Response(200, [], json_encode($filteredData)),
+            new Response(200, [], json_encode($filteredData) ?: '{}'),
         ]);
 
         $handlerStack = HandlerStack::create($mockHandler);
@@ -249,7 +251,7 @@ class TagIntegrationTest extends TestCase
         $filters = [
             'limit' => 2,
             'orderBy' => 'clicks',
-            'orderDir' => 'desc'
+            'orderDir' => 'desc',
         ];
 
         $links = $service->getTagLinks('tag123def', $filters);
@@ -263,7 +265,7 @@ class TagIntegrationTest extends TestCase
     public function test_get_tag_links_handles_not_found(): void
     {
         $mockHandler = new MockHandler([
-            new Response(404, [], json_encode($this->fixtures['error_not_found'])),
+            new Response(404, [], json_encode($this->fixtures['error_not_found']) ?: '{}'),
         ]);
 
         $handlerStack = HandlerStack::create($mockHandler);

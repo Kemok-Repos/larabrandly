@@ -6,6 +6,7 @@ use Exception;
 
 class RebrandlyException extends Exception
 {
+    /** @var array<string, mixed> */
     protected array $context = [];
 
     public static function invalidApiKey(): self

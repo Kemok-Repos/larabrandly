@@ -14,7 +14,8 @@ class RebrandlyService
 {
     public function __construct(
         private RebrandlyClient $client
-    ) {}
+    ) {
+    }
 
     public function getAccount(): AccountData
     {
@@ -79,7 +80,7 @@ class RebrandlyService
         }
     }
 
-    public function listLinks($filters = []): array
+    public function listLinks(array|LinkFilters $filters = []): array
     {
         if ($filters instanceof LinkFilters) {
             $filters = $filters->toArray();

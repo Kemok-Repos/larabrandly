@@ -88,6 +88,9 @@ class RebrandlyClient
         return $data;
     }
 
+    /**
+     * @return never
+     */
     private function handleClientException(ClientException $e): void
     {
         $response = $e->getResponse();

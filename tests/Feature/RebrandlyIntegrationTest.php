@@ -16,6 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 class RebrandlyIntegrationTest extends TestCase
 {
+    /** @var array<string, mixed> */
     private array $fixtures;
 
     protected function setUp(): void
@@ -27,9 +28,9 @@ class RebrandlyIntegrationTest extends TestCase
     public function test_complete_link_lifecycle(): void
     {
         $mockHandler = new MockHandler([
-            new Response(200, [], json_encode($this->fixtures['create_link_success'])),
-            new Response(200, [], json_encode($this->fixtures['get_link_success'])),
-            new Response(200, [], json_encode($this->fixtures['update_link_success'])),
+            new Response(200, [], json_encode($this->fixtures['create_link_success']) ?: '{}'),
+            new Response(200, [], json_encode($this->fixtures['get_link_success']) ?: '{}'),
+            new Response(200, [], json_encode($this->fixtures['update_link_success']) ?: '{}'),
             new Response(204, [], ''),
         ]);
 
@@ -54,6 +55,7 @@ class RebrandlyIntegrationTest extends TestCase
         $this->assertEquals('https://example.com', $createdLink->destination);
         $this->assertEquals('https://rebrand.ly/test', $createdLink->shortUrl);
 
+        $this->assertNotNull($createdLink->id);
         $fetchedLink = $service->getLink($createdLink->id);
 
         $this->assertEquals('Existing Link', $fetchedLink->title);
@@ -85,7 +87,7 @@ class RebrandlyIntegrationTest extends TestCase
         unset($responseData['title'], $responseData['tags'], $responseData['description']);
 
         $mockHandler = new MockHandler([
-            new Response(200, [], json_encode($responseData)),
+            new Response(200, [], json_encode($responseData) ?: '{}'),
         ]);
 
         $handlerStack = HandlerStack::create($mockHandler);
@@ -107,7 +109,7 @@ class RebrandlyIntegrationTest extends TestCase
     public function test_list_links_integration(): void
     {
         $mockHandler = new MockHandler([
-            new Response(200, [], json_encode($this->fixtures['list_links_success'])),
+            new Response(200, [], json_encode($this->fixtures['list_links_success']) ?: '{}'),
         ]);
 
         $handlerStack = HandlerStack::create($mockHandler);
@@ -133,7 +135,7 @@ class RebrandlyIntegrationTest extends TestCase
     public function test_handles_api_errors_properly(): void
     {
         $mockHandler = new MockHandler([
-            new Response(401, [], json_encode($this->fixtures['error_unauthorized'])),
+            new Response(401, [], json_encode($this->fixtures['error_unauthorized']) ?: '{}'),
         ]);
 
         $handlerStack = HandlerStack::create($mockHandler);
@@ -150,7 +152,7 @@ class RebrandlyIntegrationTest extends TestCase
     public function test_handles_not_found_errors(): void
     {
         $mockHandler = new MockHandler([
-            new Response(404, [], json_encode($this->fixtures['error_not_found'])),
+            new Response(404, [], json_encode($this->fixtures['error_not_found']) ?: '{}'),
         ]);
 
         $handlerStack = HandlerStack::create($mockHandler);
@@ -167,7 +169,7 @@ class RebrandlyIntegrationTest extends TestCase
     public function test_handles_validation_errors(): void
     {
         $mockHandler = new MockHandler([
-            new Response(422, [], json_encode($this->fixtures['error_validation'])),
+            new Response(422, [], json_encode($this->fixtures['error_validation']) ?: '{}'),
         ]);
 
         $handlerStack = HandlerStack::create($mockHandler);
@@ -196,7 +198,7 @@ class RebrandlyIntegrationTest extends TestCase
         $responseData['title'] = 'Only Title Updated';
 
         $mockHandler = new MockHandler([
-            new Response(200, [], json_encode($responseData)),
+            new Response(200, [], json_encode($responseData) ?: '{}'),
         ]);
 
         $handlerStack = HandlerStack::create($mockHandler);

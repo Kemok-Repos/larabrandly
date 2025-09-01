@@ -18,7 +18,8 @@ class LinkFilters
         public readonly ?\DateTimeImmutable $createdAfter = null,
         public readonly ?\DateTimeImmutable $modifiedBefore = null,
         public readonly ?\DateTimeImmutable $modifiedAfter = null,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {
@@ -49,7 +50,7 @@ class LinkFilters
         }
 
         if ($this->tags !== null) {
-            $filters['tags'] = is_array($this->tags) ? implode(',', $this->tags) : $this->tags;
+            $filters['tags'] = implode(',', $this->tags);
         }
 
         if ($this->slashtag !== null) {

@@ -12,7 +12,8 @@ class TagService
 {
     public function __construct(
         private RebrandlyClient $client
-    ) {}
+    ) {
+    }
 
     public function createTag(CreateTagData $data): TagData
     {

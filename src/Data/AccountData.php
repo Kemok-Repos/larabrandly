@@ -14,7 +14,8 @@ class AccountData
         public readonly ?array $subscription = null,
         public readonly ?array $limits = null,
         public readonly ?array $usage = null,
-    ) {}
+    ) {
+    }
 
     public static function fromArray(array $data): self
     {

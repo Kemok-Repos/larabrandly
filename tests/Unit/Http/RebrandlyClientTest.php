@@ -112,7 +112,7 @@ class RebrandlyClientTest extends TestCase
     public function test_handles_401_unauthorized_error(): void
     {
         $request = new Request('GET', 'links');
-        $response = new Response(401, [], json_encode(['message' => 'Unauthorized']));
+        $response = new Response(401, [], json_encode(['message' => 'Unauthorized']) ?: '{}');
 
         $this->httpClient
             ->expects($this->once())
@@ -128,7 +128,7 @@ class RebrandlyClientTest extends TestCase
     public function test_handles_404_not_found_error(): void
     {
         $request = new Request('GET', 'links/nonexistent');
-        $response = new Response(404, [], json_encode(['message' => 'Not Found']));
+        $response = new Response(404, [], json_encode(['message' => 'Not Found']) ?: '{}');
 
         $this->httpClient
             ->expects($this->once())
@@ -145,7 +145,7 @@ class RebrandlyClientTest extends TestCase
     {
         $request = new Request('GET', 'links');
         $errorData = ['message' => 'Validation failed', 'errors' => ['field' => 'required']];
-        $response = new Response(422, [], json_encode($errorData));
+        $response = new Response(422, [], json_encode($errorData) ?: '{}');
 
         $this->httpClient
             ->expects($this->once())
@@ -156,10 +156,12 @@ class RebrandlyClientTest extends TestCase
         $this->expectExceptionMessage('Validation failed');
 
         $exception = null;
+
         try {
             $this->client->get('links');
         } catch (RebrandlyException $e) {
             $exception = $e;
+
             throw $e;
         } finally {
             if ($exception) {

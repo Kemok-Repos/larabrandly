@@ -110,4 +110,47 @@ class LinkDataTest extends TestCase
         $this->assertArrayNotHasKey('favourite', $array);
         $this->assertArrayNotHasKey('description', $array);
     }
+
+    public function test_to_array_with_all_fields(): void
+    {
+        $linkData = new LinkData(
+            title: 'Test Link',
+            slashtag: 'test',
+            destination: 'https://example.com',
+            domain: 'rebrand.ly',
+            tags: ['tag1', 'tag2'],
+            favourite: true,
+            description: 'Test description'
+        );
+
+        $array = $linkData->toArray();
+
+        $expected = [
+            'title' => 'Test Link',
+            'slashtag' => 'test',
+            'destination' => 'https://example.com',
+            'domain' => 'rebrand.ly',
+            'tags' => ['tag1', 'tag2'],
+            'favourite' => true,
+            'description' => 'Test description',
+        ];
+
+        $this->assertEquals($expected, $array);
+    }
+
+    public function test_from_array_handles_empty_strings(): void
+    {
+        $data = [
+            'id' => 'abc123',
+            'destination' => 'https://example.com',
+            'title' => '',
+            'tags' => [],
+        ];
+
+        $linkData = LinkData::fromArray($data);
+
+        $this->assertEquals('abc123', $linkData->id);
+        $this->assertEquals('', $linkData->title);
+        $this->assertEquals([], $linkData->tags);
+    }
 }
