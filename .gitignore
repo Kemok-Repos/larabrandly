@@ -33,3 +33,6 @@ phpstan.cache
 
 # Psalm
 .psalm/
+
+# Claude
+.claude/
