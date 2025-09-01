@@ -251,7 +251,7 @@ class RebrandlyServiceTest extends TestCase
                 'id' => 'abc123',
                 'title' => 'Link 1',
                 'destination' => 'https://example.com',
-            ]
+            ],
         ];
 
         $this->client
@@ -336,7 +336,7 @@ class RebrandlyServiceTest extends TestCase
         $linkId = 'link123';
         $responseData = [
             ['id' => 'tag1', 'name' => 'Marketing'],
-            ['id' => 'tag2', 'name' => 'Campaign']
+            ['id' => 'tag2', 'name' => 'Campaign'],
         ];
 
         $this->client
@@ -373,13 +373,13 @@ class RebrandlyServiceTest extends TestCase
             [
                 'id' => 'link1',
                 'title' => 'Link 1',
-                'destination' => 'https://example1.com'
+                'destination' => 'https://example1.com',
             ],
             [
                 'id' => 'link2',
-                'title' => 'Link 2', 
-                'destination' => 'https://example2.com'
-            ]
+                'title' => 'Link 2',
+                'destination' => 'https://example2.com',
+            ],
         ];
 
         $this->client

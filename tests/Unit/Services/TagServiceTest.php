@@ -3,7 +3,6 @@
 namespace KemokRepos\Larabrandly\Tests\Unit\Services;
 
 use KemokRepos\Larabrandly\Data\CreateTagData;
-use KemokRepos\Larabrandly\Data\LinkData;
 use KemokRepos\Larabrandly\Data\TagData;
 use KemokRepos\Larabrandly\Data\UpdateTagData;
 use KemokRepos\Larabrandly\Exceptions\RebrandlyException;
