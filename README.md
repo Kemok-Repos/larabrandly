@@ -1,9 +1,9 @@
 # Larabrandly
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/kemok-repos/larabrandly.svg?style=flat-square)](https://packagist.org/packages/kemok-repos/larabrandly)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/kemok-repos/larabrandly/run-tests?label=tests)](https://github.com/kemok-repos/larabrandly/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/kemok-repos/larabrandly/Check%20&%20fix%20styling?label=code%20style)](https://github.com/kemok-repos/larabrandly/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Total Downloads](https://img.shields.io/packagist/dt/kemok-repos/larabrandly.svg?style=flat-square)](https://packagist.org/packages/kemok-repos/larabrandly)
+[![PHP Version](https://img.shields.io/packagist/php-v/kemok-repos/larabrandly.svg?style=flat-square)](https://packagist.org/packages/kemok-repos/larabrandly)
 
 Un paquete de Laravel para la integración con la API de Rebrandly. Permite crear, gestionar y rastrear enlaces cortos de manera sencilla.
 
