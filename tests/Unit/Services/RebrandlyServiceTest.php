@@ -117,7 +117,7 @@ class RebrandlyServiceTest extends TestCase
 
         $this->client
             ->expects($this->once())
-            ->method('put')
+            ->method('post')
             ->with("links/{$linkId}", $updateData->toArray())
             ->willReturn($responseData);
 
@@ -135,7 +135,7 @@ class RebrandlyServiceTest extends TestCase
 
         $this->client
             ->expects($this->once())
-            ->method('put')
+            ->method('post')
             ->willThrowException(RebrandlyException::apiError('Link not found', 404));
 
         $this->expectException(RebrandlyException::class);
