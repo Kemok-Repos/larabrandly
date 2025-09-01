@@ -10,4 +10,8 @@ parameters:
         - '#has parameter \$[a-zA-Z]+ with no value type specified in iterable type array#'
         - '#return type has no value type specified in iterable type array#'
     excludePaths:
-        - vendor/*
+        - vendor
+    scanDirectories:
+        - src
+        - tests
+    scanFiles: []
