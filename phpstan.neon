@@ -1,0 +1,19 @@
+parameters:
+    paths:
+        - src
+        - tests
+    level: 8
+    ignoreErrors:
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::expects\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::willReturn\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::method\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::with\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::once\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::never\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::willThrowException\(\)#'
+        # Ignore PHPUnit mock methods
+        - '#Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject::#'
+    excludePaths:
+        - vendor/*
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
