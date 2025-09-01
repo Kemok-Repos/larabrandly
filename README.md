@@ -17,7 +17,7 @@ Un paquete de Laravel para la integración con la API de Rebrandly. Permite crea
 - ✅ **Filtros avanzados**: Filtrado completo de enlaces
 - ✅ **Gestión de errores**: Manejo robusto de errores de API
 - ✅ **Testing completo**: Pruebas unitarias y de integración
-- ✅ **Soporte Laravel**: Compatible con Laravel 9, 10 y 11
+- ✅ **Soporte Laravel**: Compatible con Laravel 9, 10, 11 y 12
 - ✅ **Facades múltiples**: Para enlaces y tags por separado
 
 ## Instalación
