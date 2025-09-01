@@ -12,7 +12,9 @@ $finder = PhpCsFixer\Finder::create()
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
 
-return (new PhpCsFixer\Config())
+$config = new PhpCsFixer\Config();
+
+return $config
     ->setRules([
         '@PSR2' => true,
         '@PHP81Migration' => true,
